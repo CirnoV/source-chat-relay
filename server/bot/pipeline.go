@@ -1,6 +1,9 @@
 package bot
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/rumblefrog/source-chat-relay/server/config"
 	"github.com/rumblefrog/source-chat-relay/server/entity"
 	"github.com/rumblefrog/source-chat-relay/server/relay"
@@ -25,6 +28,7 @@ func Listen() {
 							RelayBot.ChannelMessageSendEmbed(channel.ID, message.Embed())
 						} else {
 							content := TransformMentions(RelayBot, channel.ID, message.Plain())
+							content = content + fmt.Sprintf("    <t:%d:R>", time.Now().Unix())
 							RelayBot.ChannelMessageSend(channel.ID, content)
 						}
 					}
